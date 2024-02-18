@@ -4,7 +4,7 @@ import { Link, Outlet, useLoaderData } from "react-router-dom";
 function Sidebar() {
   const categories = useLoaderData();
   const handleClick = (id) => {
-    const categoryData = categories.find((item) => id === item.id);
+    const categoryData = categories.find((item) => id === item._id);
 
     console.log(categoryData);
   };
@@ -14,11 +14,11 @@ function Sidebar() {
       <div className="max-h-[350px] flex flex-row sticky top-0">
         <div className="flex flex-col w-56 bg-myblue rounded-r-3xl overflow-hidden shadow-md">
           <ul className="flex flex-col py-4">
-            {categories.map((category) => (
-              <Link to={`/courses/${category.id}`} key={category.id}>
+            {categories.map((category, idx) => (
+              <Link to={`/courses/${category._id}`} key={idx}>
                 <li>
                   <span
-                    onClick={(e) => handleClick(category.id)}
+                    onClick={(e) => handleClick(category._id)}
                     className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"
                   >
                     <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"></span>

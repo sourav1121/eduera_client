@@ -17,8 +17,8 @@ function FeaturedCourses() {
 
       <div className="container mx-auto px-48">
         <div className="grid grid-cols-2 gap-5">
-          {data.map((item) => (
-            <CourseCard item={item} key={item.courses.id} />
+          {data.map((item, idx) => (
+            <CourseCard item={item} key={idx} />
           ))}
         </div>
         <div className="mt-36 pb-28 flex justify-center">

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function CourseCard({ item }) {
   return (
     <>
-      <Link to={`/courses/${item.id}/${item?.courses?.id}`}>
+      <Link to={`/courses/${item._id}/${item?.courses?._id}`}>
         <div className="flex px-5 pt-6 pb-10 rounded-lg hover:bg-white">
           <img
             src={item?.courses?.photo_url}

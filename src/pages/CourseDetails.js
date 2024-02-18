@@ -1,17 +1,46 @@
-import React from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { BsCheck } from "react-icons/bs";
 import { createRef } from "react";
+import { useParams } from "react-router-dom/dist";
+import { getOneCourse } from "../services/api";
 
 function CourseDetails() {
-  const data = useLoaderData();
+  const { categoryId, courseId } = useParams();
+  const [data, setData] = useState(null);
+  const [course, setCourse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const ref = createRef();
 
-  const courses = data.courses;
-  const course_outline = data.courses.course_outline;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getOneCourse(categoryId, courseId);
+        setData(data);
+        setCourse(data[0].courses);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsError(true);
+        setIsLoading(false);
+      }
+    };
 
-  const { id, title, photo_url, description, price, lessons, students } =
-    courses;
+    fetchData();
+  }, [categoryId, courseId]);
+
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
+
+  if (isError) {
+    return <div>Error occurred while fetching course details.</div>;
+  }
+
+  const course_outline = course.course_outline;
+  const { _id, title, photo_url, description, price, lessons, students } =
+    course;
 
   return (
     <div className="flex flex-col" ref={ref}>
@@ -27,12 +56,11 @@ function CourseDetails() {
             </div>
             <div className="flex-1 p-5">
               <p className="text-3xl mb-4 text-myblue font-bold">${price}</p>
-              <Link to={`/checkout/${data.id}/${id}`}>
+              <Link to={`/checkout/${data.id}/${_id}`}>
                 <button className="bg-myblue w-full text-white p-2 mb-2">
                   GET PREMIUM ACCESS
                 </button>
               </Link>
-              
 
               <p className="text-lg font-semibold">This course includes:</p>
               <span>Lessons: {lessons}</span>
@@ -43,8 +71,8 @@ function CourseDetails() {
       <div className="mx-5 my-5 max-w-[58%] border border-black p-5">
         <h2 className="text-xl mb-3">What you'll learn</h2>
         <ul>
-          {course_outline.map((line) => (
-            <li>
+          {course_outline.map((line, idx) => (
+            <li key={idx}>
               <BsCheck className="inline" />
               {line}
             </li>

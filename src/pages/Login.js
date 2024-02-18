@@ -12,7 +12,7 @@ import useTitle from "../hooks/useTitle";
 
 const Register = () => {
   const {
-    register,    
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm({ criteriaMode: "all" });
@@ -55,6 +55,7 @@ const Register = () => {
       .catch((error) => {
         const errorCode = error.code;
         toast(errorCode);
+        setLoading(false);
       });
   };
 

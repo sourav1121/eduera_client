@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
-  createUserWithEmailAndPassword,
-  getAuth,
   onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
@@ -10,57 +9,74 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import app from "../firebase.config";
+
+import firebaseService from "../services/firebase";
 
 export const AuthContext = createContext();
-const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   const providerLogin = (provider) => {
     setLoading(true);
-    return signInWithPopup(auth, provider);
+    return signInWithPopup(firebaseService.auth, provider);
   };
 
-  const createUser = (email, password) => {
+  const createUser = async (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+
+    try {
+      const req = await axios.post("http://localhost:5000/api/user", {
+        email: email,
+        password: password,
+      });
+
+      const message = req.data.success;
+      return message;
+    } catch (err) {
+      const errMessage = err.response.data.error;
+      return errMessage;
+    }
   };
 
   const signIn = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password);
+    return signInWithEmailAndPassword(firebaseService.auth, email, password);
   };
 
   const updateUserProfile = (profile) => {
-    return updateProfile(auth.currentUser, profile);
+    return updateProfile(firebaseService.auth.currentUser, profile);
   };
 
   const verifyEmail = () => {
-    return sendEmailVerification(auth.currentUser);
+    return sendEmailVerification(firebaseService.auth.currentUser);
   };
   const passwordReset = (email) => {
-    return sendPasswordResetEmail(auth, email);
+    return sendPasswordResetEmail(firebaseService.auth, email);
   };
 
   const logOut = () => {
     setLoading(true);
-    return signOut(auth);
+    setUser(null);
+    setToken(null);
+    return signOut(firebaseService.auth);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (
-        currentUser === null ||
-        currentUser.emailVerified ||
-        currentUser.photoURL.match(/github/)
-      ) {
-        setUser(currentUser);
+    const unsubscribe = onAuthStateChanged(
+      firebaseService.auth,
+      (currentUser) => {
+        if (currentUser && currentUser.emailVerified) {
+          currentUser.getIdToken().then((token) => {
+            setToken(token);
+            setUser(currentUser.email);
+          });
+        }
+        setLoading(false);
       }
-      setLoading(false);
-    });
+    );
 
     return () => {
       unsubscribe();

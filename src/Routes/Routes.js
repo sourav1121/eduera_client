@@ -73,7 +73,7 @@ export const routes = createBrowserRouter([
         ),
         loader: async ({ params }) => {
           const res = await fetch(
-            `http://localhost:5000/courses/${params.categoryId}/${params.courseId}`
+            `http://localhost:5000/api/courses/${params.categoryId}/${params.courseId}`
           );
           return res.json();
         },
@@ -105,7 +105,7 @@ export const routes = createBrowserRouter([
       </>
     ),
     loader: async () => {
-      const res = await fetch("http://localhost:5000/courses");
+      const res = await fetch("http://localhost:5000/api/courses");
       return res.json();
     },
   },
@@ -126,34 +126,18 @@ export const routes = createBrowserRouter([
       {
         path: "/courses",
         element: <Courses />,
-        loader: async () => {
-          const res = await fetch("http://localhost:5000/courses");
-          return res.json();
-        },
       },
       {
         path: "/courses/:categoryId",
         element: <CourseCategory />,
-        loader: async ({ params }) => {
-          const res = await fetch(
-            `http://localhost:5000/courses/${params.categoryId}`
-          );
-          return res.json();
-        },
       },
       {
         path: "/courses/:categoryId/:courseId",
         element: <CourseDetails />,
-        loader: async ({ params }) => {
-          const res = await fetch(
-            `http://localhost:5000/courses/${params.categoryId}/${params.courseId}`
-          );
-          return res.json();
-        },
       },
     ],
     loader: async () => {
-      const res = await fetch("http://localhost:5000/courses");
+      const res = await fetch("http://localhost:5000/api/courses");
       return res.json();
     },
   },
