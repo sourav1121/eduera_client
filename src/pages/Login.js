@@ -19,7 +19,8 @@ const Login = () => {
 
   const password = useRef();
   const [error, setError] = useState("");
-  const { signIn, setLoading, providerLogin } = useContext(AuthContext);
+  const { signIn, setLoading, providerLogin, storeProviderUser } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   useTitle("Login");
@@ -29,32 +30,30 @@ const Login = () => {
   const githubProvider = new GithubAuthProvider();
 
   const [role, setRole] = useState(null);
-  const [showLoginForm, setShowLoginForm] = useState(false);
   const [step, setStep] = useState(0);
 
-  useEffect(() => {
-    if (role) {
-      // Simulate an asynchronous operation
-      setTimeout(() => {
-        setShowLoginForm(true);
-      }, 1000);
-    }
-  }, [role]);
-
   const googleSignin = () => {
+    setLoading(true);
     providerLogin(googleProvider)
       .then((result) => {
         const user = result.user;
         if (user) {
-          toast("Login Success");
-          navigate(from, { replace: true });
+          storeProviderUser(user?.email, user?.uid, role).then((result) => {
+            if (result === "success") {
+              toast("Login Success");
+              setLoading(false);
+              navigate(from, { replace: true });
+            }
+          });
         }
       })
       .catch((error) => {
         const errorCode = error.code;
+        setLoading(false);
         toast(errorCode);
       });
   };
+
   const githubSignin = () => {
     providerLogin(githubProvider)
       .then((result) => {
@@ -123,24 +122,29 @@ const Login = () => {
         <h1 className="text-2xl font-bold mb-10">Choose an account</h1>
         <div className="flex justify-between gap-5">
           <div
-            onClick={() => handleRoleSelection("teacher")}
-            className="flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+            onClick={() => handleRoleSelection("student")}
+            className={`flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${
+              role === "student" ? "border-2 border-blue-500" : ""
+            }`}
           >
             {/* Replace with your teacher illustration */}
             <div className="mb-2 w-16 h-16 bg-gray-200 rounded-full"></div>
-            <h2 className="text-lg font-bold">Teacher Account</h2>
+            <h2 className="text-lg font-bold">Student Account</h2>
             <p className="text-center text-sm">
-              For teachers, co-teachers, admins, coaches, club advisors,
+              For students, explore a vast collection of courses, acquire
+              skills, highly reputated certificates, club advisors,
               instructional techs
             </p>
           </div>
           <div
             onClick={() => handleRoleSelection("teacher")}
-            className="flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out"
+            className={`flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${
+              role === "teacher" ? "border-2 border-blue-500" : ""
+            }`}
           >
             {/* Replace with your teacher illustration */}
             <div className="mb-2 w-16 h-16 bg-gray-200 rounded-full"></div>
-            <h2 className="text-lg font-bold">Teacher Account</h2>
+            <h2 className="text-lg font-bold">Instructor Account</h2>
             <p className="text-center text-sm">
               For teachers, co-teachers, admins, coaches, club advisors,
               instructional techs

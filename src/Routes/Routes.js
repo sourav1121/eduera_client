@@ -18,6 +18,7 @@ import FAQ from "../pages/FAQ";
 import Blog from "./../pages/Blog";
 import PageNotFound from "../pages/PageNotFound";
 import Checkout from "../pages/Checkout";
+import StudentDashboard from "../pages/StudentDashboard";
 
 export const routes = createBrowserRouter([
   {
@@ -89,6 +90,14 @@ export const routes = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/studentDashboard",
+        element: (
+          <PrivateRoute>
+            <StudentDashboard />,
+          </PrivateRoute>
+        ),
       },
     ],
   },

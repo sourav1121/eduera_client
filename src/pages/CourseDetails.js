@@ -56,7 +56,7 @@ function CourseDetails() {
             </div>
             <div className="flex-1 p-5">
               <p className="text-3xl mb-4 text-myblue font-bold">${price}</p>
-              <Link to={`/checkout/${data.id}/${_id}`}>
+              <Link to={`/checkout/${data._id}/${_id}`}>
                 <button className="bg-myblue w-full text-white p-2 mb-2">
                   GET PREMIUM ACCESS
                 </button>

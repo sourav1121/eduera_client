@@ -20,17 +20,17 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
 
   const providerLogin = (provider) => {
-    setLoading(true);
     return signInWithPopup(firebaseService.auth, provider);
   };
 
-  const createUser = async (email, password) => {
+  const createUser = async (email, password, role) => {
     setLoading(true);
 
     try {
       const req = await axios.post("http://localhost:5000/api/user", {
-        email: email,
-        password: password,
+        email,
+        password,
+        role,
       });
 
       const message = req.data.success;
@@ -41,8 +41,31 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signIn = (email, password) => {
+  const storeProviderUser = async (email, fuid, role) => {
     setLoading(true);
+
+    try {
+      const req = await axios.post(
+        "http://localhost:5000/api/user/storeProviderUser",
+        {
+          email,
+          fuid,
+          role,
+        }
+      );
+
+      const message = req.data.success;
+      if (message) {
+        setLoading(false);
+      }
+      return message;
+    } catch (err) {
+      const errMessage = err.response.data.error;
+      return errMessage;
+    }
+  };
+
+  const signIn = (email, password) => {
     return signInWithEmailAndPassword(firebaseService.auth, email, password);
   };
 
@@ -71,7 +94,8 @@ const AuthProvider = ({ children }) => {
         if (currentUser && currentUser.emailVerified) {
           currentUser.getIdToken().then((token) => {
             setToken(token);
-            setUser(currentUser.email);
+
+            setUser(currentUser.uid);
           });
         }
         setLoading(false);
@@ -85,6 +109,8 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    setUser,
+    setToken,
     loading,
     setLoading,
     providerLogin,
@@ -94,6 +120,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     passwordReset,
+    storeProviderUser,
   };
 
   return (
