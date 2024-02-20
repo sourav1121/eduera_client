@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -23,8 +23,10 @@ const Login = () => {
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from || "/";
+  console.log(from);
+
   useTitle("Login");
-  const from = location.state?.from?.pathname || "/";
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -42,7 +44,7 @@ const Login = () => {
             if (result === "success") {
               toast("Login Success");
               setLoading(false);
-              navigate(from, { replace: true });
+              navigate(`"${from}"`);
             }
           });
         }

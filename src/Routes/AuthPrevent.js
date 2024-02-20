@@ -13,6 +13,8 @@ const AuthPrevent = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
 
+  const from = location.state?.from || "/";
+
   if (loading) {
     return (
       <ColorRing
@@ -28,7 +30,7 @@ const AuthPrevent = ({ children }) => {
   }
 
   if (user) {
-    return <Navigate to="/" state={{ from: location }} replace></Navigate>;
+    return <Navigate to={from} replace></Navigate>;
   }
   return children;
 };

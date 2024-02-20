@@ -19,6 +19,7 @@ import Blog from "./../pages/Blog";
 import PageNotFound from "../pages/PageNotFound";
 import Checkout from "../pages/Checkout";
 import StudentDashboard from "../pages/StudentDashboard";
+import CourseMaterial from "../pages/CourseMaterial";
 
 export const routes = createBrowserRouter([
   {
@@ -72,12 +73,6 @@ export const routes = createBrowserRouter([
             <Checkout />
           </PrivateRoute>
         ),
-        loader: async ({ params }) => {
-          const res = await fetch(
-            `http://localhost:5000/api/courses/${params.categoryId}/${params.courseId}`
-          );
-          return res.json();
-        },
       },
       {
         path: "/reset",
@@ -96,6 +91,14 @@ export const routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <StudentDashboard />,
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/courses/:categoryId/:courseId/view",
+        element: (
+          <PrivateRoute>
+            <CourseMaterial />,
           </PrivateRoute>
         ),
       },

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "./../components/CourseCard";
-import { getAllCategories } from "../services/api";
+import { getAllCourses } from "../services/api";
 
 function Courses() {
-  const [categories, setCategories] = useState(null);
+  const [courses, setCourses] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    getAllCategories()
+    getAllCourses()
       .then((data) => {
-        setCategories(data);
+        setCourses(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -25,14 +25,14 @@ function Courses() {
   }
 
   if (isError) {
-    return <div>Error occurred while fetching categories.</div>;
+    return <div>Error occurred while fetching courses.</div>;
   }
 
   return (
     <>
       <div className="mx-5 bg-gray-100 rounded-lg p-5 min-w-[80%]">
         <div className="grid grid-cols-2 gap-5">
-          {categories.map((item, idx) => (
+          {courses.map((item, idx) => (
             <CourseCard item={item} key={idx} />
           ))}
         </div>

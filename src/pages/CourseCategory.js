@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../components/CourseCard";
 import { useParams } from "react-router-dom/dist";
-import { getOneCategory } from "../services/api";
+import { getCoursesByCategory } from "../services/api";
 
 function CourseCategory() {
   const { categoryId } = useParams();
-  const [category, setCategory] = useState(null);
+  const [courses, setCourses] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getOneCategory(categoryId);
-        setCategory(data);
+        const data = await getCoursesByCategory(categoryId);
+        setCourses(data);
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@ function CourseCategory() {
   return (
     <div className="mx-5 bg-gray-100 rounded-lg p-5 min-w-[80%]">
       <div className="grid grid-cols-2 gap-5">
-        {category.map((item, idx) => (
+        {courses.map((item, idx) => (
           <CourseCard item={item} key={idx} />
         ))}
       </div>

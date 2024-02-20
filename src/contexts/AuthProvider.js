@@ -94,7 +94,6 @@ const AuthProvider = ({ children }) => {
         if (currentUser && currentUser.emailVerified) {
           currentUser.getIdToken().then((token) => {
             setToken(token);
-
             setUser(currentUser.uid);
           });
         }
@@ -121,6 +120,7 @@ const AuthProvider = ({ children }) => {
     signIn,
     passwordReset,
     storeProviderUser,
+    token,
   };
 
   return (
