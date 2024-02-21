@@ -42,7 +42,7 @@ const getAllCategories = async () => {
 
 const getCoursesByCategory = async (catId) => {
   try {
-    const response = await axios.get(`${baseUrl}/courses/${catId}`);
+    const response = await axios.get(`${baseUrl}/courses/category/${catId}`);
     return response.data;
   } catch (error) {
     console.error(error);

@@ -90,7 +90,7 @@ export const routes = createBrowserRouter([
         path: "/studentDashboard",
         element: (
           <PrivateRoute>
-            <StudentDashboard />,
+            <StudentDashboard />
           </PrivateRoute>
         ),
       },
