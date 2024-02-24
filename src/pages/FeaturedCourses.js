@@ -8,15 +8,15 @@ function FeaturedCourses() {
 
   return (
     <div className="bg-gray-100">
-      <p className="pt-32 text-gray-400 text-center font-light">
+      <p className="pt-20 text-gray-400 text-center font-light">
         START TO LEARN?
       </p>
       <h2 className="mt-3 mb-16 text-myblue text-center font-semibold text-4xl">
         Featured Popular Class
       </h2>
 
-      <div className="container mx-auto px-48">
-        <div className="grid grid-cols-2 gap-5">
+      <div className="container mx-auto xl:px-48">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {data.map((item, idx) => (
             <CourseCard item={item} key={idx} />
           ))}

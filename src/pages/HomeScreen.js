@@ -19,7 +19,7 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="container mx-auto px-48">
+    <div className="container mx-auto xl:px-48">
       <Nav />
       <header>
         <div className="flex justify-between items-center">
@@ -42,18 +42,13 @@ function HomeScreen() {
               Read More <FaArrowRight className="inline" />
             </button>
           </div>
-          <div className="w-[40%] relative overflow-hidden">
+          <div className="w-1/2 h-1/2 relative overflow-hidden">
             <img
-              src="/assets/images/yellow-girl.jpg"
+              src="/assets/images/eduera_study.jpg"
               alt=""
-              className="rounded-full z-20 w-full"
+              className="rounded-lg z-20 w-full"
             />
-            <img
-              src="/assets/images/dots.png"
-              alt=""
-              className="absolute top-0 left-0 -z-10 shape"
-              data-value="-2"
-            />
+
             <img
               src="/assets/images/elipse-2.png"
               alt=""

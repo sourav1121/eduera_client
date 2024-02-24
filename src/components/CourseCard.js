@@ -9,7 +9,7 @@ function CourseCard({ item }) {
       <Link to={`/courses/${item.category_id}/${item?._id}`}>
         <div className="flex px-5 pt-6 pb-10 rounded-lg hover:bg-white">
           <img
-            src={item?.photo_url}
+            src={`http://localhost:5000/${item?.photo_url}`}
             alt=""
             className="w-40 h-40 rounded-full p-2"
           />

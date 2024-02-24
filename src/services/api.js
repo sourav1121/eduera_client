@@ -90,11 +90,45 @@ const createCheckoutSession = async (catid, crsid, userid, token) => {
     console.error(error);
   }
 };
+const createCourse = async (course, token) => {
+  console.log(course);
+  try {
+    const response = await axios.post(`${baseUrl}/courses`, course, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const updateCourse = async (course, token, courseId) => {
+  console.log(course);
+  try {
+    const response = await axios.put(`${baseUrl}/courses/${courseId}`, course, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const deleteCourse = async (courseId, token) => {
+  try {
+    const response = await axios.delete(`${baseUrl}/courses/${courseId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // My API
-const getMyData = async (token) => {
+const getMyCourses = async (userId, token) => {
   try {
-    const response = await axios.get(`${baseUrl}/user/`, {
+    const response = await axios.get(`${baseUrl}/user/${userId}/courses`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -120,9 +154,12 @@ export {
   getAllCourses,
   getCoursesByCategory,
   getOneCourse,
-  getMyData,
+  getMyCourses,
   getOneCourseMaterial,
   createCheckoutSession,
   getCurrentUserDB,
   getAllCategories,
+  createCourse,
+  updateCourse,
+  deleteCourse,
 };

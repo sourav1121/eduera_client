@@ -26,10 +26,10 @@ function Sidebar() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
       <div className="max-h-[350px] flex flex-row sticky top-0">
-        <div className="flex flex-col w-56 bg-myblue rounded-r-3xl overflow-hidden shadow-md">
-          <ul className="flex flex-col py-4">
+        <div className="flex flex-col lg:w-56 bg-myblue w-full rounded-r-3xl overflow-hidden shadow-md">
+          <ul className="flex lg:flex-col py-4">
             {categories.map((category, idx) => (
               <Link to={`/courses/${category._id}`} key={idx}>
                 <li>

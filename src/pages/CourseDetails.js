@@ -5,6 +5,7 @@ import { createRef } from "react";
 import { useParams } from "react-router-dom/dist";
 import { getCurrentUserDB, getOneCourse } from "../services/api";
 import { AuthContext } from "../contexts/AuthProvider";
+import ReactPlayer from "react-player";
 
 function CourseDetails() {
   const { categoryId, courseId } = useParams();
@@ -18,6 +19,13 @@ function CourseDetails() {
     lessons: "",
     students: "",
     course_outline: [],
+    course_materials: [
+      {
+        title: "",
+        description: "",
+        video_url: "",
+      },
+    ],
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -65,7 +73,11 @@ function CourseDetails() {
         <div className="absolute top-[10%] right-[10%] bg-white w-[300px] h-[600px] shadow-md border border-white">
           <div className="flex flex-col">
             <div className="flex-1">
-              <img src={photo_url} alt="" className="" />
+              <img
+                src={`http://localhost:5000/${photo_url}`}
+                alt=""
+                className=""
+              />
             </div>
             <div className="flex-1 p-5">
               <p className="text-3xl mb-4 text-myblue font-bold">${price}</p>
@@ -101,6 +113,14 @@ function CourseDetails() {
             </li>
           ))}
         </ul>
+        <ReactPlayer
+          url={course?.course_materials[0].video_url}
+          controls={true}
+          width="100%"
+          className="mt-8"
+          playing={true}
+          muted={true}
+        />
       </div>
     </div>
   );

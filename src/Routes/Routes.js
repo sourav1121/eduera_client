@@ -20,6 +20,8 @@ import PageNotFound from "../pages/PageNotFound";
 import Checkout from "../pages/Checkout";
 import StudentDashboard from "../pages/StudentDashboard";
 import CourseMaterial from "../pages/CourseMaterial";
+import InstructorDashboard from "../pages/IntructorDashboard";
+import CoursePage from "../pages/CoursePage";
 
 export const routes = createBrowserRouter([
   {
@@ -95,10 +97,26 @@ export const routes = createBrowserRouter([
         ),
       },
       {
+        path: "/instructorDashboard",
+        element: (
+          <PrivateRoute>
+            <InstructorDashboard />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/createCourse",
+        element: (
+          <PrivateRoute>
+            <CoursePage />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/courses/:categoryId/:courseId/view",
         element: (
           <PrivateRoute>
-            <CourseMaterial />,
+            <CourseMaterial />
           </PrivateRoute>
         ),
       },
@@ -109,10 +127,12 @@ export const routes = createBrowserRouter([
     index: true,
     element: (
       <>
-        <HomeScreen />
-        <FeaturedCourses />
-        <div className="container mx-auto px-48">
-          <Footer />
+        <div className="bg-gray-100">
+          <HomeScreen />
+          <FeaturedCourses />
+          <div className="container mx-auto xl:px-48">
+            <Footer />
+          </div>
         </div>
       </>
     ),
@@ -125,7 +145,7 @@ export const routes = createBrowserRouter([
     path: "/courses",
     element: (
       <>
-        <div className="container mx-auto px-48">
+        <div className="container mx-auto md:px-10 lg:px-48">
           <Nav />
         </div>
         <div className="container mx-auto">

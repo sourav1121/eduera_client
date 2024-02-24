@@ -31,7 +31,7 @@ function Courses() {
   return (
     <>
       <div className="mx-5 bg-gray-100 rounded-lg p-5 min-w-[80%]">
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {courses.map((item, idx) => (
             <CourseCard item={item} key={idx} />
           ))}
