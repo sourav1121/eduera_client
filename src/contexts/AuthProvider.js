@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
         if (currentUser && currentUser.emailVerified) {
           currentUser.getIdToken().then((token) => {
             setToken(token);
-            setUser(currentUser.uid);
+            setUser(currentUser);
           });
         }
         setLoading(false);

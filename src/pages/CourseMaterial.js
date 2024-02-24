@@ -17,7 +17,7 @@ function CourseMaterial() {
     // Fetch the course material when the component mounts
     const fetchData = async () => {
       try {
-        const currentUser = await getCurrentUserDB(user, token);
+        const currentUser = await getCurrentUserDB(user?.uid, token);
         // Check if the user is enrolled in the course
         if (!currentUser.enrollments.includes(courseId)) {
           // If not, redirect to the checkout page
@@ -36,8 +36,12 @@ function CourseMaterial() {
     fetchData();
   }, [categoryId, courseId, navigate, token, user]);
 
-  if (isLoading || !course || !currentVideo) {
+  if (isLoading || !currentVideo) {
     return <div>Loading...</div>;
+  }
+
+  if (!course) {
+    return <div>You have to pay first to access course materials!</div>;
   }
 
   return (

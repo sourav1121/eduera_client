@@ -21,7 +21,7 @@ export default function FAQ() {
         >
           What do Learnera courses include?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 ">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900 ">
           Each Learnera course is created, owned and managed by the
           instructor(s). The foundation of each Learnera course are its
           lectures, which can include videos, slides, and text. In addition,
@@ -36,7 +36,7 @@ export default function FAQ() {
         >
           How do I take a Learnera course?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           Learnera courses are entirely on-demand and they can be accessed from
           several different devices and platforms, including a desktop, laptop,
           and our mobile app. After you enroll in a course, you can access it by
@@ -53,7 +53,7 @@ export default function FAQ() {
         >
           Is there any way to preview a course?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           Yes! you can access it by clicking on the course link and preview the
           information regarding that course :)
         </AccordionBody>

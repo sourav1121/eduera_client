@@ -21,7 +21,7 @@ export default function Blog() {
         >
           What is Cors?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           Cross-origin resource sharing is a mechanism that allows restricted
           resources on a web page to be requested from another domain outside
           the domain from which the first resource was served. A web page may
@@ -37,7 +37,7 @@ export default function Blog() {
           Why are you using firebase? What other options do you have to
           implement authentication?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           I would manually make function and validate and then insert into
           database, to authenticate and for authorization, I would use
           react-context to pass the authentication, also use react reducers, Or
@@ -54,7 +54,7 @@ export default function Blog() {
         >
           How does the private route work?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           The react private route component renders child components ( children
           ) if the user is logged in. If not logged in the user is redirected to
           the /login page with the return url passed in the location state
@@ -68,7 +68,7 @@ export default function Blog() {
         >
           What is Node? How does Node work?
         </AccordionHeader>
-        <AccordionBody className="p-5 font-light border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+        <AccordionBody className="text-white p-5 font-normal text-base border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
           It is a used as backend service where javascript works on the
           server-side of the application. This way javascript is used on both
           frontend and backend. Node. js runs on chrome v8 engine which converts

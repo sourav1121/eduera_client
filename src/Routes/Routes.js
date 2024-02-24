@@ -20,7 +20,7 @@ import PageNotFound from "../pages/PageNotFound";
 import Checkout from "../pages/Checkout";
 import StudentDashboard from "../pages/StudentDashboard";
 import CourseMaterial from "../pages/CourseMaterial";
-import InstructorDashboard from "../pages/IntructorDashboard";
+import AdminDashboard from "../pages/AdminDashboard";
 import CoursePage from "../pages/CoursePage";
 
 export const routes = createBrowserRouter([
@@ -97,10 +97,10 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/instructorDashboard",
+        path: "/adminDashboard",
         element: (
           <PrivateRoute>
-            <InstructorDashboard />
+            <AdminDashboard />
           </PrivateRoute>
         ),
       },

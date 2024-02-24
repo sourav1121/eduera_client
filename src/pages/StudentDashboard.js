@@ -13,7 +13,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchEnrollments = async () => {
       // Fetch the user data from your backend
-      const user1 = await getCurrentUserDB(user, token);
+      const user1 = await getCurrentUserDB(user.uid, token);
       // Fetch the details of each course the user is enrolled in
       if (user1) {
         const coursePromises = user1.enrollments.map((courseId) =>
@@ -33,6 +33,10 @@ const StudentDashboard = () => {
 
   if (loading) {
     return <h1>...Loading</h1>;
+  }
+
+  if (courses.length <= 0) {
+    return <h1>You are not enrolled in any course yet!</h1>;
   }
 
   return (

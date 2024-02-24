@@ -29,7 +29,7 @@ function Nav() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const getUser = await getCurrentUserDB(user, token);
+        const getUser = await getCurrentUserDB(user?.uid, token);
         setCurrentUser(getUser);
       } catch (error) {
         console.error(error);
@@ -114,11 +114,11 @@ function Nav() {
                     </Link>
                   ) : (
                     <Link
-                      to="/instructorDashboard"
+                      to="/adminDashboard"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsOpen(false)}
                     >
-                      Instructor Dashboard
+                      Admin Dashboard
                     </Link>
                   )}
                 </div>

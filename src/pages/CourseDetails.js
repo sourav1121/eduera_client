@@ -38,7 +38,7 @@ function CourseDetails() {
       try {
         const data = await getOneCourse(categoryId, courseId);
         setCourse(data);
-        const getUser = await getCurrentUserDB(user, token);
+        const getUser = await getCurrentUserDB(user?.uid, token);
         setCurrentUser(getUser);
         // Check if the user is enrolled in the course
         setIsLoading(false);

@@ -9,6 +9,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
 import useTitle from "../hooks/useTitle";
+import { FaUserGraduate } from "react-icons/fa";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 
 const Login = () => {
   const {
@@ -115,28 +117,23 @@ const Login = () => {
   };
 
   return (
-    <div className="relative w-full h-[75vh] overflow-hidden m-auto">
+    <div className="relative w-full h-[75vh] overflow-hidden m-auto bg-gray-100">
       <div
         className={`absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center transition-transform duration-500 ease-in-out ${
           step === 0 ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <h1 className="text-2xl font-bold mb-10">Choose an account</h1>
-        <div className="flex justify-between gap-5">
+        <div className="flex w-full justify-between gap-5 px-5">
           <div
             onClick={() => handleRoleSelection("student")}
             className={`flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${
               role === "student" ? "border-2 border-blue-500" : ""
             }`}
           >
-            {/* Replace with your teacher illustration */}
-            <div className="mb-2 w-16 h-16 bg-gray-200 rounded-full"></div>
+            <FaUserGraduate className="mb-2 w-16 h-16 text-blue-500" />
+
             <h2 className="text-lg font-bold">Student Account</h2>
-            <p className="text-center text-sm">
-              For students, explore a vast collection of courses, acquire
-              skills, highly reputated certificates, club advisors,
-              instructional techs
-            </p>
           </div>
           <div
             onClick={() => handleRoleSelection("teacher")}
@@ -144,17 +141,10 @@ const Login = () => {
               role === "teacher" ? "border-2 border-blue-500" : ""
             }`}
           >
-            {/* Replace with your teacher illustration */}
-            <div className="mb-2 w-16 h-16 bg-gray-200 rounded-full"></div>
-            <h2 className="text-lg font-bold">Instructor Account</h2>
-            <p className="text-center text-sm">
-              For teachers, co-teachers, admins, coaches, club advisors,
-              instructional techs
-            </p>
+            <MdOutlineAdminPanelSettings className="mb-2 w-16 h-16 text-blue-500" />
+            <h2 className="text-lg font-bold">Admin Account</h2>
           </div>
         </div>
-
-        {/* Repeat for Student Account and Parent Account */}
         <button
           onClick={handleNextClick}
           disabled={!role}

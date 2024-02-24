@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const InstructorDashboard = () => {
+const AdminDashboard = () => {
   const [courses, setCourses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user, token } = useContext(AuthContext);
@@ -15,9 +15,9 @@ const InstructorDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getMyCourses(user, token);
+        const data = await getMyCourses(user.uid, token);
         setCourses(data);
-        const getUser = await getCurrentUserDB(user, token);
+        const getUser = await getCurrentUserDB(user.uid, token);
         setCurrentUser(getUser);
         setIsLoading(false);
       } catch (error) {
@@ -48,11 +48,11 @@ const InstructorDashboard = () => {
   };
 
   if (isLoading || !courses) {
-    <h1>...Loading</h1>;
+    return <h1>...Loading</h1>;
   }
 
   if (currentUser?.role === "student") {
-    <h1>You must have a instructor account!</h1>;
+    return <h1>You must have an Admin account!</h1>;
   }
 
   return (
@@ -104,4 +104,4 @@ const InstructorDashboard = () => {
   );
 };
 
-export default InstructorDashboard;
+export default AdminDashboard;

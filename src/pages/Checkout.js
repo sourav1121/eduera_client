@@ -33,7 +33,7 @@ function Checkout() {
       try {
         const data = await getOneCourse(categoryId, courseId);
         setCourse(data);
-        const getUser = await getCurrentUserDB(user, token);
+        const getUser = await getCurrentUserDB(user?.uid, token);
         setCurrentUser(getUser);
       } catch (error) {
         console.error(error);
@@ -41,24 +41,26 @@ function Checkout() {
     };
 
     fetchData();
-  }, [categoryId, course, courseId, token, user]);
+  }, [token, user]);
 
   const { title, photo_url, price } = course;
 
   async function handleCheckout() {
-    const response = await createCheckoutSession(
-      categoryId,
-      courseId,
-      user,
-      token
-    );
-    if (response) {
-      const stripe = await getStripe();
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: response.id,
-      });
-      if (error) {
-        console.warn(error.message);
+    if (user?.uid) {
+      const response = await createCheckoutSession(
+        categoryId,
+        courseId,
+        user?.uid,
+        token
+      );
+      if (response) {
+        const stripe = await getStripe();
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: response.id,
+        });
+        if (error) {
+          console.warn(error.message);
+        }
       }
     }
   }
