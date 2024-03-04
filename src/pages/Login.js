@@ -26,7 +26,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from || "/";
-  console.log(from);
 
   useTitle("Login");
 
@@ -62,10 +61,14 @@ const Login = () => {
     providerLogin(githubProvider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         if (user) {
-          toast("Login Success");
-          navigate(from, { replace: true });
+          storeProviderUser(user?.email, user?.uid, role).then((result) => {
+            if (result === "success") {
+              toast("Login Success");
+              setLoading(false);
+              navigate(from, { replace: true });
+            }
+          });
         }
       })
       .catch((error) => {
@@ -90,7 +93,8 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        toast.error(error.code);
+        // Display the error message in the toast notification
+        toast.error(error.message);
         setError(error.message);
       })
       .finally(() => {
@@ -136,9 +140,9 @@ const Login = () => {
             <h2 className="text-lg font-bold">Student Account</h2>
           </div>
           <div
-            onClick={() => handleRoleSelection("teacher")}
+            onClick={() => handleRoleSelection("admin")}
             className={`flex flex-col items-center justify-center w-full h-64 p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out ${
-              role === "teacher" ? "border-2 border-blue-500" : ""
+              role === "admin" ? "border-2 border-blue-500" : ""
             }`}
           >
             <MdOutlineAdminPanelSettings className="mb-2 w-16 h-16 text-blue-500" />
@@ -163,7 +167,7 @@ const Login = () => {
         <div className="flex flex-col items-center w-full h-full sm:justify-center sm:pt-0 bg-gray-50">
           <div>
             <a href="/">
-              <h3 className="text-4xl font-bold text-purple-600">Learnera.</h3>
+              <h3 className="text-4xl font-bold text-purple-600">Eduera.</h3>
             </a>
           </div>
           <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
@@ -247,6 +251,7 @@ const Login = () => {
                 <Link
                   className="text-sm text-gray-600 underline hover:text-gray-900"
                   to="/register"
+                  state={role}
                 >
                   Signup Today
                 </Link>

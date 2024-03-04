@@ -38,12 +38,12 @@ const AdminDashboard = () => {
 
   const handleDeleteCourse = async (courseId) => {
     try {
-      const result = await deleteCourse(courseId, token);
+      const result = await deleteCourse(courseId, token, user?.uid);
       toast(result.message);
       // Remove the deleted course from the local state
       setCourses(courses.filter((course) => course._id !== courseId));
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

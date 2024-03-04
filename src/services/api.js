@@ -17,7 +17,8 @@ const signup = async (data) => {
     const response = await axios.post(`${baseUrl}/user/register`, data);
     return response.data;
   } catch (error) {
-    console.error(error);
+    const errorMessage = error.response.data.error;
+    return errorMessage;
   }
 };
 
@@ -91,7 +92,6 @@ const createCheckoutSession = async (catid, crsid, userid, token) => {
   }
 };
 const createCourse = async (course, token) => {
-  console.log(course);
   try {
     const response = await axios.post(`${baseUrl}/courses`, course, {
       headers: { Authorization: `Bearer ${token}` },
@@ -103,7 +103,6 @@ const createCourse = async (course, token) => {
 };
 
 const updateCourse = async (course, token, courseId) => {
-  console.log(course);
   try {
     const response = await axios.put(`${baseUrl}/courses/${courseId}`, course, {
       headers: { Authorization: `Bearer ${token}` },
@@ -114,9 +113,10 @@ const updateCourse = async (course, token, courseId) => {
   }
 };
 
-const deleteCourse = async (courseId, token) => {
+const deleteCourse = async (courseId, token, userid) => {
   try {
     const response = await axios.delete(`${baseUrl}/courses/${courseId}`, {
+      userId: userid,
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;

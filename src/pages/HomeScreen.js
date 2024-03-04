@@ -19,7 +19,7 @@ function HomeScreen() {
   }, []);
 
   return (
-    <div className="container mx-auto md:px-40 xl:px-48">
+    <div className="container mx-auto lg:px-40 xl:px-48">
       <Nav />
       <header>
         <div className="flex justify-between items-center">

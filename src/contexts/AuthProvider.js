@@ -23,24 +23,6 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(firebaseService.auth, provider);
   };
 
-  const createUser = async (email, password, role) => {
-    setLoading(true);
-
-    try {
-      const req = await axios.post("http://localhost:5000/api/user", {
-        email,
-        password,
-        role,
-      });
-
-      const message = req.data.success;
-      return message;
-    } catch (err) {
-      const errMessage = err.response.data.error;
-      return errMessage;
-    }
-  };
-
   const storeProviderUser = async (email, fuid, role) => {
     setLoading(true);
 
@@ -65,8 +47,22 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signIn = (email, password) => {
-    return signInWithEmailAndPassword(firebaseService.auth, email, password);
+  const signIn = async (email, password) => {
+    try {
+      const result = await signInWithEmailAndPassword(
+        firebaseService.auth,
+        email,
+        password
+      );
+      const user = result.user;
+      if (!user.emailVerified) {
+        await sendEmailVerification(user);
+        throw new Error("Please verify your email address.");
+      }
+      return result;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const updateUserProfile = (profile) => {
@@ -74,8 +70,9 @@ const AuthProvider = ({ children }) => {
   };
 
   const verifyEmail = () => {
-    return sendEmailVerification(firebaseService.auth.currentUser);
+    return sendEmailVerification(firebaseService.auth);
   };
+
   const passwordReset = (email) => {
     return sendPasswordResetEmail(firebaseService.auth, email);
   };
@@ -116,7 +113,6 @@ const AuthProvider = ({ children }) => {
     logOut,
     updateUserProfile,
     verifyEmail,
-    createUser,
     signIn,
     passwordReset,
     storeProviderUser,

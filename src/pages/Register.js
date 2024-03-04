@@ -9,14 +9,17 @@ import useTitle from "../hooks/useTitle";
 import { GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
+import { signup } from "../services/api";
 
 const Register = () => {
+  const { state } = useLocation();
+  console.log(state);
   const {
-    createUser,
     verifyEmail,
     updateUserProfile,
     providerLogin,
     setLoading,
+    storeProviderUser,
   } = useContext(AuthContext);
   const {
     register,
@@ -37,19 +40,27 @@ const Register = () => {
   const githubProvider = new GithubAuthProvider();
 
   const googleSignin = () => {
+    setLoading(true);
     providerLogin(googleProvider)
       .then((result) => {
         const user = result.user;
         if (user) {
-          toast("Login Success");
-          navigate(from, { replace: true });
+          storeProviderUser(user?.email, user?.uid, state).then((result) => {
+            if (result === "success") {
+              toast("Login Success");
+              setLoading(false);
+              navigate(`"${from}"`);
+            }
+          });
         }
       })
       .catch((error) => {
         const errorCode = error.code;
+        setLoading(false);
         toast(errorCode);
       });
   };
+
   const githubSignin = () => {
     providerLogin(githubProvider)
       .then((result) => {
@@ -66,22 +77,23 @@ const Register = () => {
       });
   };
 
-  const onSubmit = (data) => {
-    const { fullname, email, password, photoUrl } = data;
+  const onSubmit = async (data) => {
+    const { fullname, email, password } = data;
 
-    console.log(fullname, email, password, photoUrl);
-
-    const photo = photoUrl ? photoUrl : "/assets/images/photowing.com.png";
-    createUser(email, password)
+    signup({ email, password, state })
       .then((result) => {
-        handleUpdateUserProfile(fullname, photo);
-        handleEmailVerification();
-        toast.success("Please verify your email address.");
-        setLoading(false);
+        if (result.success) {
+          handleEmailVerification();
+          toast.success(result.success);
+          setLoading(false);
+        } else {
+          // Display the error message
+          toast.error(result);
+          setLoading(false);
+        }
       })
       .catch((error) => {
-        const errorCode = error.code;
-        toast(errorCode);
+        toast.error(error);
         setLoading(false);
       });
   };
@@ -100,7 +112,11 @@ const Register = () => {
   const handleEmailVerification = () => {
     verifyEmail()
       .then(() => {})
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        const errorCode = error.code;
+        toast(errorCode);
+        setLoading(false);
+      });
   };
 
   return (
@@ -108,7 +124,7 @@ const Register = () => {
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
         <div>
           <a href="/">
-            <h3 className="text-4xl font-bold text-purple-600">Learnera.</h3>
+            <h3 className="text-4xl font-bold text-purple-600">Eduera.</h3>
           </a>
         </div>
         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
@@ -234,7 +250,7 @@ const Register = () => {
                 />
                 {watch("password_repeat") !== watch("password") &&
                 getValues("password_repeat") ? (
-                  <p>password not match</p>
+                  <p className="text-red-500">password not match</p>
                 ) : null}
               </div>
             </div>

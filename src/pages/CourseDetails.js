@@ -81,7 +81,7 @@ function CourseDetails() {
             </div>
             <div className="flex-1 p-5">
               <p className="text-3xl mb-4 text-myblue font-bold">${price}</p>
-              {currentUser && currentUser.enrollments.includes(courseId) ? (
+              {currentUser && currentUser?.enrollments.includes(courseId) ? (
                 <Link to={`/courses/${course.category_id}/${_id}/view`}>
                   <button className="bg-myblue w-full text-white p-2 mb-2">
                     GO TO COURSE
